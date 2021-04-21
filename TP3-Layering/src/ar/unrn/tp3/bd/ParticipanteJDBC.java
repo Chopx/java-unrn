@@ -22,10 +22,9 @@ public class ParticipanteJDBC implements RepositorioDeParticipante{
 			st.setString(2, p.obtenerTelefono());
 			st.setString(3, p.obtenerRegion());
 			st.executeUpdate();
-		} catch(SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
 			st.close();
+		} catch(SQLException e) {
+			throw new RuntimeException("Error en cargar participante");
 		}
 	}
 
