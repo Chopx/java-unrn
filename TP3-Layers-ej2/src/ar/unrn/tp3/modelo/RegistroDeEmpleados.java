@@ -6,4 +6,5 @@ public interface RegistroDeEmpleados {
 
 	void registrar(Empleado empleado);
 	ArrayList<Empleado> obtenerEmpleados();
+	boolean existeUnEmpleado(Empleado emp);
 }
