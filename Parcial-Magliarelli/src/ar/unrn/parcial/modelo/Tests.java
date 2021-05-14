@@ -10,94 +10,84 @@ import org.junit.jupiter.api.Test;
 
 import ar.unrn.parcial.persistance.RegistroDeFacturasEnMemoria;
 
-
-
 class Tests {
 
 	@Test
 	void facturaDescuentoNaftaSuperDomingoTest() throws Exception {
 		// set up
-		RepositorioDeFacturas repo = new RegistroDeFacturasEnMemoria();
 		LocalDateTime FechaDomingo = LocalDateTime.of(2021, 5, 9, 9, 0);
 		Combustible naftaSuper = new Super(90);
 		Litros veinteLts = new Litros(20);
-		Factura facturaConDtoDomingo = new Factura(FechaDomingo, naftaSuper, veinteLts, repo);
-				
-		// exercise
-		facturaConDtoDomingo.realizarFactura();
-				
+		Factura facturaConDtoDomingo = new Factura(FechaDomingo, naftaSuper, veinteLts);
+
+		double montoTotal = facturaConDtoDomingo.calcularMontoTotal();
+
 		// verify
-		assertEquals(facturaConDtoDomingo.obtenerMonto(), 1620.0, 0.1);
-				
+		assertEquals(montoTotal, 1620.0, 0.1);
+
 	}
-	
+
 	@Test
 	void facturaDescuentoNaftaSuperSabadoTest() throws Exception {
 		// set up
-		RepositorioDeFacturas repo = new RegistroDeFacturasEnMemoria();
 		LocalDateTime FechaSabado = LocalDateTime.of(2021, 5, 8, 9, 0);
 		Combustible naftaSuper = new Super(90);
 		Litros veinteLts = new Litros(20);
-		Factura facturaConDtoSabadoYllevaMasDe20lts = new Factura(FechaSabado, naftaSuper, veinteLts, repo);
-		
+		Factura facturaConDtoSabadoYllevaMasDe20lts = new Factura(FechaSabado, naftaSuper, veinteLts);
+
 		// exercise
-		facturaConDtoSabadoYllevaMasDe20lts.realizarFactura();
-		
+		double montoTotal = facturaConDtoSabadoYllevaMasDe20lts.calcularMontoTotal();
+
 		// verify
-		assertEquals(facturaConDtoSabadoYllevaMasDe20lts.obtenerMonto(), 1584.0, 0.1);
-		
-		
+		assertEquals(montoTotal, 1584.0, 0.1);
+
 	}
-	
+
 	@Test
 	void facturaDescuentoNaftaComunEnHorarioTest() throws Exception {
 		// set up
-		RepositorioDeFacturas repo = new RegistroDeFacturasEnMemoria();
 		LocalDateTime Fecha = LocalDateTime.of(2021, 5, 8, 9, 0);
 		Combustible naftaComun = new Comun(70);
 		Litros veinteLts = new Litros(20);
-		Factura facturaComunDtoEnHorario = new Factura(Fecha, naftaComun, veinteLts, repo);
-				
+		Factura facturaComunDtoEnHorario = new Factura(Fecha, naftaComun, veinteLts);
+
 		// exercise
-		facturaComunDtoEnHorario.realizarFactura();
-				
+		double montoTotal = facturaComunDtoEnHorario.calcularMontoTotal();
+
 		// verify
-		assertEquals(facturaComunDtoEnHorario.obtenerMonto(), 1330.0, 0.1);
-				
+		assertEquals(montoTotal, 1330.0, 0.1);
+
 	}
-	
+
 	@Test
 	void facturaSinDescuento() throws Exception {
 		// set up
-		RepositorioDeFacturas repo = new RegistroDeFacturasEnMemoria();
 		LocalDateTime Fecha = LocalDateTime.of(2021, 5, 8, 16, 0);
 		Combustible naftaComun = new Comun(70);
 		Litros veinteLts = new Litros(20);
-		Factura facturaComunDtoEnHorario = new Factura(Fecha, naftaComun, veinteLts, repo);
-				
+		Factura facturaComunSinDtoEnHorario = new Factura(Fecha, naftaComun, veinteLts);
+
 		// exercise
-		facturaComunDtoEnHorario.realizarFactura();
-				
+		double montoTotal = facturaComunSinDtoEnHorario.calcularMontoTotal();
+
 		// verify
-		assertEquals(facturaComunDtoEnHorario.obtenerMonto(), 1400.0, 0.1);
-				
+		assertEquals(montoTotal, 1400.0, 0.1);
+
 	}
 
 	@Test
 	void facturaSinDescuentoPorLlevarMenosDe20Lts() throws Exception {
 		// set up
-		RepositorioDeFacturas repo = new RegistroDeFacturasEnMemoria();
 		LocalDateTime FechaSabado = LocalDateTime.of(2021, 5, 8, 9, 0);
 		Combustible naftaSuper = new Super(90);
 		Litros veinteLts = new Litros(10);
-		Factura facturaConDtoSabadoYllevaMenosDe20lts = new Factura(FechaSabado, naftaSuper, veinteLts, repo);
-				
+		Factura facturaConDtoSabadoYllevaMenosDe20lts = new Factura(FechaSabado, naftaSuper, veinteLts);
+
 		// exercise
-		facturaConDtoSabadoYllevaMenosDe20lts.realizarFactura();
-				
+		double montoTotal = facturaConDtoSabadoYllevaMenosDe20lts.calcularMontoTotal();
+
 		// verify
-		assertEquals(facturaConDtoSabadoYllevaMenosDe20lts.obtenerMonto(), 900.0, 0.1);
-				
-				
+		assertEquals(montoTotal, 900.0, 0.1);
+
 	}
 }

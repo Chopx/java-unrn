@@ -15,20 +15,22 @@ import javax.swing.table.DefaultTableModel;
 import ar.unrn.parcial.modelo.Factura;
 import ar.unrn.parcial.modelo.RepositorioDeFacturas;
 
-public class UI_ListadoVentas extends JFrame {
+public class UiListadoVentas extends JFrame {
 
 	private JPanel contentPane;
 	DefaultTableModel modelo;
+
 	/**
 	 * Launch the application.
-	 * @return 
+	 * 
+	 * @return
 	 */
-	
+
 	/**
 	 * Create the frame.
 	 */
-	public UI_ListadoVentas(RepositorioDeFacturas repo, LocalDateTime inicio, LocalDateTime fin) {
-		
+	public UiListadoVentas(RepositorioDeFacturas repo, LocalDateTime inicio, LocalDateTime fin) {
+
 		String[] titulos = { "Fecha y hora", "Tipo Nafta", "Litros", "Monto" };
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 587, 315);
@@ -36,33 +38,31 @@ public class UI_ListadoVentas extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setTitle("Listado de facturas");
-		
+
 		JTable table = new JTable();
 		table.setBounds(1, 30, 420, 0);
 
 		modelo = new DefaultTableModel(new Object[][] {}, titulos);
 
-		
 		ArrayList<Factura> facturas = null;
-	
+
 		try {
 			facturas = repo.obtenerFacturasEntreFechas(inicio, fin);
-		} catch(Exception ex) {
-			JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR LITROS", JOptionPane.ERROR_MESSAGE);		
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR LITROS", JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 		for (Factura f : facturas) {
 			System.out.println(f.toString());
 		}
-	
-	
-		
+
 		for (Factura f : facturas) {
 			String fecha = f.fechaDeFactura().format(DateTimeFormatter.ofPattern("dd-MM-yyyy h:mm"));
-			modelo.addRow(new Object[] { fecha, f.verTipoDeCombustible(), f.cantidadDeLitros(), f.calcularMontoTotal()});
+			modelo.addRow(
+					new Object[] { fecha, f.verTipoDeCombustible(), f.cantidadDeLitros(), f.calcularMontoTotal() });
 		}
 		contentPane.setLayout(null);
-		
+
 		table.setModel(modelo);
 		contentPane.add(table, BorderLayout.CENTER);
 		JScrollPane scrollPane = new JScrollPane(table);
